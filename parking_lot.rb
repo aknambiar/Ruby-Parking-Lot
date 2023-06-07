@@ -2,42 +2,31 @@
 
 # Manages the parking and unparking of cars
 class ParkingLot
-  require_relative 'car'
-  @@max_cars = 10
+  Car = Struct.new(:regn, :entry_time, :slot)
+  attr_reader :car_list
 
   def initialize
-    @car_list = {}
-    @slots = Array.new(@@max_cars, false)
+    @max_cars = 10
+    @car_list = []
   end
 
   def park(regn)
     slot = find_empty_slot
-    if slot
-      @slots[slot] = true
-      # @car_list[regn] = { 'car' => Car.new(regn), 'slot' => slot }
-      @car_list[regn] = Car.new(regn, Time.now.strftime('%H:%M:%S'), slot)
-    end
+    @car_list.push(Car.new(regn, Time.now.strftime('%H:%M:%S'), slot)) if slot
     slot
   end
 
   def unpark(regn)
-    slot = find_occupied_slot(regn)
-    if slot
-      @slots[slot] = false
-      @car_list.delete(regn)
-    end
-    slot
+    @car_list.delete(find_car(regn))
   end
 
   def find_car(regn)
-    @car_list[regn]['car']
+    @car_list.detect { |car| car[:regn] == regn }
   end
 
-  def find_empty_slot
-    @slots.each_with_index do |occupied, slot|
-      return slot unless occupied
-    end
-    false
+  def find_empty_slot # r
+    occupied = @car_list.map { |car| car[:slot] }
+    (1..@max_cars).find { |slot| !occupied.include?(slot) }
   end
 
   def find_occupied_slot(regn)
@@ -49,6 +38,7 @@ pl = ParkingLot.new
 pl.park(11)
 pl.park(22)
 pl.park(33)
+# pl.unpark(33)
+# pl.park(44)
 pl.unpark(33)
-pl.park(44)
 puts pl.car_list

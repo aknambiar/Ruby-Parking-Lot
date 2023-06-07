@@ -24,13 +24,9 @@ class ParkingLot
     @car_list.detect { |car| car[:regn] == regn }
   end
 
-  def find_empty_slot # r
+  def find_empty_slot # refactor
     occupied = @car_list.map { |car| car[:slot] }
     (1..@max_cars).find { |slot| !occupied.include?(slot) }
-  end
-
-  def find_occupied_slot(regn)
-    @car_list[regn]['slot']
   end
 end
 

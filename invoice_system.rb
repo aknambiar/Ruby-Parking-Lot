@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# docu ment ation
+# Handles and generates invoices for parking system
 class InvoiceSystem
   Invoice = Struct.new(:id, :regn, :entry_time, :exit_time, :duration, :amount)
 

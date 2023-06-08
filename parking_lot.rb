@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 
-# Manages the parking and unparking of cars
+# Parking and unparks cars
 class ParkingLot
   Car = Struct.new(:regn, :entry_time, :slot)
   attr_reader :car_list

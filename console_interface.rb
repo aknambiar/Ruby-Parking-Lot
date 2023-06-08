@@ -1,10 +1,7 @@
-class Interface
-  # RegNum = Struct.new(:regn) do
-  #   def valid?(regn)
-  #     regn.match?(/[A-Za-z]{2}[0-9]{8}/)
-  #   end
-  # end
+# frozen-string-literal: true
 
+# Console interface for parking system
+class Interface
   def initialize
     require_relative 'invoice_system'
     require_relative 'parking_lot'
@@ -13,7 +10,7 @@ class Interface
                  2 => ['Display all cars',      method(:display_all_cars)],
                  3 => ['Display all invoices',  method(:display_invoices)],
                  4 => ['Invoice lookup',        method(:lookup_invoice)],
-                 5 => ['Exit',                  method(:stop)] }
+                 5 => ['Exit',                  -> { exit }] }
     @invoice_system = InvoiceSystem.new
     @parking_lot = ParkingLot.new
   end
@@ -21,10 +18,6 @@ class Interface
   def input(text)
     puts text
     gets.chomp
-  end
-
-  def stop
-    exit
   end
 
   def start
@@ -37,7 +30,7 @@ class Interface
 
   def parking
     regn = input 'Enter registration number'
-    return puts 'Invalid' unless validate(regn)
+    return puts 'Invalid registration number' unless validate(regn)
 
     case input 'Park/Unpark? [p/u]'
     when 'p', 'P'
@@ -84,6 +77,3 @@ end
 
 In = Interface.new
 In.start
-# puts In.validate("AB")
-# puts In.validate("AB1245")
-# puts In.validate("AB12345678")

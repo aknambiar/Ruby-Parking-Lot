@@ -69,7 +69,7 @@ class Interface
     invoice = @invoice_system.lookup_invoice(id)
     return puts 'Invoice not found' unless invoice
 
-    invoice.each_pair { |field, value| puts "#{field} : #{value}" }
+    invoice.each_pair { |field, value| puts "#{field.capitalize} : #{value}" }
   end
 
   def validate(regn)

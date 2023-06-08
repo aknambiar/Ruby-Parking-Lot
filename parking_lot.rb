@@ -10,13 +10,13 @@ class ParkingLot
     @car_list = []
   end
 
-  def park(regn)
+  def park_car(regn) #refactor
     slot = find_empty_slot
     @car_list.push(Car.new(regn, Time.now.strftime('%H:%M:%S'), slot)) if slot
     slot
   end
 
-  def unpark(regn)
+  def unpark_car(regn)
     @car_list.delete(find_car(regn))
   end
 
@@ -30,11 +30,11 @@ class ParkingLot
   end
 end
 
-pl = ParkingLot.new
-pl.park(11)
-pl.park(22)
-pl.park(33)
+# pl = ParkingLot.new
+# pl.park(11)
+# pl.park(22)
+# pl.park(33)
+# # pl.unpark(33)
+# # pl.park(44)
 # pl.unpark(33)
-# pl.park(44)
-pl.unpark(33)
-puts pl.car_list
+# puts pl.car_list

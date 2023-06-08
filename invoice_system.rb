@@ -36,6 +36,6 @@ class InvoiceSystem
   end
 
   def lookup_invoice(invoice_id)
-    @invoice_list.select { |invoice| invoice[:id] == invoice_id }
+    @invoice_list.detect { |invoice| invoice[:id] == invoice_id }
   end
 end

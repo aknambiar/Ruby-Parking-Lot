@@ -6,14 +6,13 @@ class ParkingLot
   attr_reader :car_list
 
   def initialize
-    @max_cars = 10
+    @max_cars = 2
     @car_list = []
   end
 
-  def park_car(regn) #refactor
+  def park_car(regn)
     slot = find_empty_slot
-    @car_list.push(Car.new(regn, Time.now.strftime('%H:%M:%S'), slot)) if slot
-    slot
+    @car_list.push(Car.new(regn, Time.now, slot)).last if slot
   end
 
   def unpark_car(regn)
@@ -24,17 +23,8 @@ class ParkingLot
     @car_list.detect { |car| car[:regn] == regn }
   end
 
-  def find_empty_slot # refactor
+  def find_empty_slot
     occupied = @car_list.map { |car| car[:slot] }
     (1..@max_cars).find { |slot| !occupied.include?(slot) }
   end
 end
-
-# pl = ParkingLot.new
-# pl.park(11)
-# pl.park(22)
-# pl.park(33)
-# # pl.unpark(33)
-# # pl.park(44)
-# pl.unpark(33)
-# puts pl.car_list

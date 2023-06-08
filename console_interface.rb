@@ -33,21 +33,21 @@ class Interface
     return puts 'Invalid registration number' unless validate(regn)
 
     case input 'Park/Unpark? [p/u]'
-    when 'p', 'P'
-      puts park(regn)
-    when 'u', 'U'
-      puts unpark(regn)
-    else
-      puts 'Error'
+    when 'p', 'P' then puts park(regn)
+    when 'u', 'U' then puts unpark(regn)
+    else puts 'Error'
     end
   end
 
   def park(regn)
-    "Parked at #{@parking_lot.park_car(regn)}"
+    car = @parking_lot.park_car(regn)
+    car ? "Parked at #{car[:slot]}" : 'No space left'
   end
 
   def unpark(regn)
     car = @parking_lot.unpark_car(regn)
+    return 'Car does not exist' unless car
+
     @invoice_system.generate_invoice(car[:regn], car[:entry_time])
     "Unparked car from #{car[:slot]}"
   end
@@ -65,9 +65,11 @@ class Interface
   end
 
   def lookup_invoice
-    id = input 'Enter invoice number'
+    id = (input 'Enter invoice number').to_i
     invoice = @invoice_system.lookup_invoice(id)
-    invoice.each { |field| puts "#{field} : #{invoice[field]}" }
+    return puts 'Invoice not found' unless invoice
+
+    invoice.each_pair { |field, value| puts "#{field} : #{value}" }
   end
 
   def validate(regn)

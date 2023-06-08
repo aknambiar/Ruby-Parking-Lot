@@ -32,7 +32,7 @@ class InvoiceSystem
   end
 
   def list_all_invoices
-    @invoice_list.map { |invoice| invoice[:id] }
+    @invoice_list.map { |invoice| { id: invoice[:id], regn: invoice[:regn] } }
   end
 
   def lookup_invoice(invoice_id)

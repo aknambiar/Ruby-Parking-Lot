@@ -16,7 +16,7 @@ class InvoiceSystem
     duration = calculate_duration(entry_time, exit_time)
     amount = calculate_amount(duration)
     @invoice_list.append(Invoice.new(invoice_id, regn, entry_time.strftime('%H:%M:%S'),
-                                     exit_time.strftime('%H:%M:%S'), duration, amount))
+                                     exit_time.strftime('%H:%M:%S'), duration, amount)).last
   end
 
   def calculate_id

@@ -76,6 +76,3 @@ class Interface
     regn.match?(/[A-Za-z]{2}[0-9]{8}/)
   end
 end
-
-In = Interface.new
-In.start

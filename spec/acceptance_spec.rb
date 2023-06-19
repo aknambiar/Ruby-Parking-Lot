@@ -23,7 +23,7 @@ RSpec.describe Interface do
     end
   end
 
-  context 'when unparking a car' do
+  context 'When unparking a car' do
     before(:each) { allow(interface).to receive(:input).and_return(regn, 'u') }
 
     it 'should unpark the car and generate an invoice' do
@@ -68,7 +68,7 @@ RSpec.describe Interface do
     end
   end
 
-  context 'when searching for a real invoice' do
+  context 'When searching for a real invoice' do
     it 'should display a particular invoice' do
       allow(interface).to receive(:input).and_return('101')
 
@@ -79,7 +79,7 @@ RSpec.describe Interface do
     end
   end
 
-  context 'when searching for an invalid invoice' do
+  context 'When searching for a non-existent invoice' do
     it 'should display an error message' do
       allow(interface).to receive(:input).and_return('777')
 

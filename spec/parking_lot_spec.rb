@@ -29,7 +29,7 @@ RSpec.describe ParkingLot do
       expect(parking_lot.unpark_car(regn)).to be_an_instance_of ParkingLot::Car
     end
 
-    it 'fails to unpark a car when it does not exist' do
+    it 'fails to unpark a non-existent car' do
       missing_regn = 'AB00000000'
 
       expect(parking_lot.unpark_car(missing_regn)).to be_falsy

@@ -6,7 +6,7 @@ class ParkingLot
   attr_reader :car_list
 
   def initialize
-    @max_cars = 2
+    @max_cars = 10
     @car_list = []
   end
 

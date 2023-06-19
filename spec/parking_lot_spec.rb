@@ -2,38 +2,64 @@
 
 require_relative '../parking_lot'
 
-RSpec.describe 'A parking lot' do
-  before :each do
-    @parking_lot = ParkingLot.new
-    @regn = 'AB12345678'
-    @new_car = ParkingLot::Car.new(@regn, Time.now, 3)
-    @parking_lot.instance_variable_set('@car_list', [@new_car])
+RSpec.describe ParkingLot do
+  let(:parking_lot) { ParkingLot.new }
+  let(:regn) { 'AB12345678' }
+
+  context 'When parking a car' do
+    it 'parks a car if slots are available' do
+      car = parking_lot.park_car(regn)
+
+      expect(car).to be_an_instance_of ParkingLot::Car
+    end
+
+    it 'fails to park a car if no slots are available' do
+      parking_lot.instance_variable_set('@max_cars', 0)
+
+      car = parking_lot.park_car(regn)
+
+      expect(car).to be_falsy
+    end
   end
 
-  it 'parks a car' do
-    car = @parking_lot.park_car(@regn)
-    expect(car).to be_an_instance_of ParkingLot::Car
-  end
+  context 'When unparking a car' do
+    it 'unparks a car if it exists' do
+      parking_lot.park_car(regn)
 
-  it 'fails to park a car when no slots are left' do
-    @parking_lot.instance_variable_set('@max_cars', 0)
-    car = @parking_lot.park_car(@regn)
-    expect(car).to be_falsy
-  end
+      expect(parking_lot.unpark_car(regn)).to be_an_instance_of ParkingLot::Car
+    end
 
-  it 'unparks a car' do
-    car = @parking_lot.unpark_car(@regn)
-    expect(car).to be_an_instance_of ParkingLot::Car
-  end
+    it 'fails to unpark a car when it does not exist' do
+      missing_regn = 'AB00000000'
 
-  it 'fails to unpark a car when it does not exist' do
-    fake_regn = 'AB00000000'
-    car = @parking_lot.unpark_car(fake_regn)
-    expect(car).to be_falsy
+      expect(parking_lot.unpark_car(missing_regn)).to be_falsy
+    end
   end
+end
+
+RSpec.describe ParkingLot do
+  let(:parking_lot) { ParkingLot.new }
+  let(:regn) { 'AB12345678' }
 
   it 'picks a car based on a registration number' do
-    car = @parking_lot.find_car(@regn)
-    expect(car).to be_an_instance_of ParkingLot::Car and expect(car[:regn]).to eq(@regn)
+    parking_lot.park_car(regn)
+
+    car = parking_lot.find_car(regn)
+
+    expect(car).to be_an_instance_of ParkingLot::Car and expect(car[:regn]).to eq(regn)
+  end
+
+  context 'When searching for a slot' do
+    it 'finds the first slot available' do
+      parking_lot.park_car(regn)
+
+      expect(parking_lot.find_empty_slot).to eq(2)
+    end
+
+    it 'returns nil if no slots are available' do
+      parking_lot.instance_variable_set('@max_cars', 0)
+
+      expect(parking_lot.find_empty_slot).to be_falsy
+    end
   end
 end

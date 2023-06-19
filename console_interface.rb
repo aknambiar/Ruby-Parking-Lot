@@ -10,7 +10,8 @@ class Interface
                  2 => ['Display all cars',      method(:display_all_cars)],
                  3 => ['Display all invoices',  method(:display_invoices)],
                  4 => ['Invoice lookup',        method(:lookup_invoice)],
-                 5 => ['Exit',                  -> { exit }] }
+                 5 => ['Exit', nil] }
+
     @invoice_system = InvoiceSystem.new
     @parking_lot = ParkingLot.new
   end
@@ -24,7 +25,9 @@ class Interface
     loop do
       @options.each { |key, value| puts "#{key}: #{value[0]}" }
       choice = input('Enter your choice').to_i
-      @options[choice][1].call if choice.between?(1, @options.keys.count)
+      break unless choice.between?(1, @options.keys.count - 1)
+
+      @options[choice][1].call
     end
   end
 

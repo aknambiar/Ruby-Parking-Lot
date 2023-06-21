@@ -10,7 +10,8 @@ class Interface
                  2 => ['Display all cars',      method(:display_all_cars)],
                  3 => ['Display all invoices',  method(:display_invoices)],
                  4 => ['Invoice lookup',        method(:lookup_invoice)],
-                 5 => ['Exit', nil] }
+                 5 => ['Write invoice to file', method(:write_to_file)],
+                 6 => ['Exit', nil] }
 
     @invoice_system = InvoiceSystem.new
     @parking_lot = ParkingLot.new
@@ -67,12 +68,23 @@ class Interface
     end
   end
 
-  def lookup_invoice
+  def retrieve_invoice
     id = (input 'Enter invoice number').to_i
-    invoice = @invoice_system.lookup_invoice(id)
+    @invoice_system.lookup_invoice(id)
+  end
+
+  def lookup_invoice
+    invoice = retrieve_invoice
     return puts 'Invoice not found' unless invoice
 
     invoice.each_pair { |field, value| puts "#{field.capitalize} : #{value}" }
+  end
+
+  def write_to_file
+    invoice = retrieve_invoice
+    return puts 'Invoice not found' unless invoice
+    
+    IO.write("./#{invoice[:id]}.csv", invoice.values.join(', '))
   end
 
   def validate(regn)

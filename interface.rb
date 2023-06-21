@@ -83,8 +83,12 @@ class Interface
   def write_to_file
     invoice = retrieve_invoice
     return puts 'Invoice not found' unless invoice
-    
-    IO.write("./#{invoice[:id]}.csv", invoice.values.join(', '))
+
+    case input 'Enter filetype: [.txt .csv]'
+    when '.txt', 'txt' then IO.write("./#{invoice[:id]}.txt", invoice.values.join(', '))
+    when '.csv', 'csv' then IO.write("./#{invoice[:id]}.csv", invoice.values.join(', '))
+    else puts 'Filetype not supported'
+    end
   end
 
   def validate(regn)

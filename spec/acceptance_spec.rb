@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../console_interface'
+require_relative '../interface'
 
 RSpec.describe Interface do
   let(:interface) { Interface.new }

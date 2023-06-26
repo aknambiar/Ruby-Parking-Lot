@@ -3,9 +3,9 @@
 # Handles writing data to disk
 class FileManager
   require_relative 'helper_methods'
-  
+
   include HelperMethods
-  
+
   def initialize
     @path = './invoices/'
     @filetypes = list_filetypes

@@ -7,12 +7,12 @@ class FileManager
   include HelperMethods
 
   def initialize
-    @path = './invoices/'
+    @path = './invoices'
     @filetypes = list_filetypes
   end
 
   def list_filetypes
-    Dir['./invoices/*']
+    Dir["#{@path}/*"]
       .filter { |file| file['_export.rb'] }
       .map { |file| file[/\w*_export.rb/].split('_').first }
   end
@@ -25,7 +25,7 @@ class FileManager
   end
 
   def write_to_file(type, invoice)
-    require "./invoices/#{type}_export"
+    require "#{@path}/#{type}_export"
 
     begin
       write_invoice(invoice)

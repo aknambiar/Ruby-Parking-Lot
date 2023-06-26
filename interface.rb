@@ -2,24 +2,24 @@
 
 # Console interface for parking system
 class Interface
-  def initialize
-    require_relative 'invoice_system'
-    require_relative 'parking_lot'
+  require_relative 'invoice_system'
+  require_relative 'parking_lot'
+  require_relative 'file_manager'
+  require_relative 'helper_methods'
 
+  include HelperMethods
+
+  def initialize
     @options = { 1 => ['Park/Unpark a car',     method(:parking)],
                  2 => ['Display all cars',      method(:display_all_cars)],
                  3 => ['Display all invoices',  method(:display_invoices)],
                  4 => ['Invoice lookup',        method(:lookup_invoice)],
-                 5 => ['Write invoice to file', method(:write_to_file)],
+                 5 => ['Save invoice to disk',  method(:save_invoice)],
                  6 => ['Exit', nil] }
 
     @invoice_system = InvoiceSystem.new
     @parking_lot = ParkingLot.new
-  end
-
-  def input(text)
-    puts text
-    gets.chomp
+    @file_manager = FileManager.new
   end
 
   def start
@@ -80,15 +80,11 @@ class Interface
     invoice.each_pair { |field, value| puts "#{field.capitalize} : #{value}" }
   end
 
-  def write_to_file
+  def save_invoice
     invoice = retrieve_invoice
     return puts 'Invoice not found' unless invoice
 
-    case input 'Enter filetype: [.txt .csv]'
-    when '.txt', 'txt' then IO.write("./#{invoice[:id]}.txt", invoice.values.join(', '))
-    when '.csv', 'csv' then IO.write("./#{invoice[:id]}.csv", invoice.values.join(', '))
-    else puts 'Filetype not supported'
-    end
+    @file_manager.save_invoice(invoice)
   end
 
   def validate(regn)

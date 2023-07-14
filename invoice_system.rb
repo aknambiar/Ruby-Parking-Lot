@@ -2,12 +2,14 @@
 
 # Handles and generates invoices for parking system
 class InvoiceSystem
+  require_relative 'constants'
+  include Constants
+
   Invoice = Struct.new(:id, :regn, :entry_time, :exit_time, :duration, :amount)
 
   def initialize
-    @prices = { 0 => 100, 10 => 200, 30 => 300, 60 => 500 } # {duration:cost}
     @invoice_list = []
-    @invoice_id_generator = 100
+    @incrementing_id = INITIAL_ID_NUMBER
   end
 
   def generate_invoice(regn, entry_time)
@@ -20,7 +22,7 @@ class InvoiceSystem
   end
 
   def calculate_id
-    @invoice_id_generator += 1
+    @incrementing_id += 1
   end
 
   def calculate_duration(entry_time, exit_time)
@@ -28,7 +30,7 @@ class InvoiceSystem
   end
 
   def calculate_amount(duration)
-    @prices.select { |slab| duration >= slab }.values.max
+    PARKING_CHARGES.select { |slab| duration >= slab }.values.max
   end
 
   def list_all_invoices

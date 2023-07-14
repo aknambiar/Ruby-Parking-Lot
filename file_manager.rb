@@ -3,18 +3,19 @@
 # Handles writing data to disk
 class FileManager
   require_relative 'helper_methods'
+  require_relative 'constants'
 
+  include Constants
   include HelperMethods
 
   def initialize
-    @path = './invoices'
     @filetypes = list_filetypes
   end
 
   def list_filetypes
-    Dir["#{@path}/*"]
-      .filter { |file| file['_export.rb'] }
-      .map { |file| file[/\w*_export.rb/].split('_').first }
+    Dir["#{INVOICE_SAVE_PATH}/*"]
+      .filter { |file| file[FILETYPE_SUFFIX] }
+      .map { |file| file[/\w*#{FILETYPE_SUFFIX}/].split('_').first }
   end
 
   def save_invoice(invoice)
@@ -25,7 +26,8 @@ class FileManager
   end
 
   def write_to_file(type, invoice)
-    require "#{@path}/#{type}_export"
+    # require "#{INVOICE_SAVE_PATH}/#{type}#{FILETYPE_SUFFIX}"
+    require INVOICE_SAVE_PATH + '/' + type + FILETYPE_SUFFIX
 
     begin
       write_invoice(invoice)

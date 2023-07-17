@@ -75,7 +75,7 @@ RSpec.describe Interface do
       interface.send(:park, list_of_regn[0])
       interface.send(:unpark, list_of_regn[0])
 
-      expect { interface.lookup_invoice }.to output(/Id : 101\nRegn : #{list_of_regn[0]}/).to_stdout
+      expect { interface.lookup_invoice }.to output(/Id : 101\nRegistration_number : #{list_of_regn[0]}/).to_stdout
     end
   end
 

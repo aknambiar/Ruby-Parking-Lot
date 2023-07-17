@@ -43,6 +43,8 @@ class Interface
     end
   end
 
+  private
+
   def park(regn)
     car = @parking_lot.park_car(regn)
     car ? "Parked at #{car[:slot]}" : 'No space left'
@@ -56,6 +58,7 @@ class Interface
     "Unparked car from #{car[:slot]}"
   end
 
+  public
   def display_all_cars
     @parking_lot.car_list.each do |car|
       puts "Regn No: #{car[:registration_number]} | Slot: #{car[:slot]}"

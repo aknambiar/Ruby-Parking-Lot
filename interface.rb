@@ -66,7 +66,10 @@ class Interface
   end
 
   def display_invoices
-    @invoice_system.list_all_invoices.each do |invoice|
+    invoices = @invoice_system.list_all_invoices
+    return puts 'No invoices found' unless invoices
+
+    invoices.each do |invoice|
       puts "Id: #{invoice[:id]} | Car: #{invoice[:regn]}"
     end
   end

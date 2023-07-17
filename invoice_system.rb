@@ -33,8 +33,13 @@ class InvoiceSystem
     PARKING_CHARGES.select { |slab| duration >= slab }.values.max
   end
 
-  def list_all_invoices
-    @invoice_list.map { |invoice| { id: invoice[:id], regn: invoice[:regn] } }
+  def display_invoices
+    invoices = @invoice_list.map { |invoice| { id: invoice[:id], regn: invoice[:regn] } }
+    return puts 'No invoices found' unless invoices
+
+    invoices.each do |invoice|
+      puts "Id: #{invoice[:id]} | Car: #{invoice[:regn]}"
+    end
   end
 
   def lookup_invoice(invoice_id)

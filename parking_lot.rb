@@ -5,7 +5,7 @@ class ParkingLot
   require_relative 'constants'
   include Constants
 
-  Car = Struct.new(:regn, :entry_time, :slot)
+  Car = Struct.new(:registration_number, :entry_time, :slot)
   attr_reader :car_list
 
   def initialize
@@ -22,7 +22,7 @@ class ParkingLot
   end
 
   def find_car(regn)
-    @car_list.detect { |car| car[:regn] == regn }
+    @car_list.detect { |car| car[:registration_number] == regn }
   end
 
   def find_empty_slot

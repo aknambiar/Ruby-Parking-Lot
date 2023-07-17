@@ -6,7 +6,6 @@ class ParkingLot
   include Constants
 
   Car = Struct.new(:registration_number, :entry_time, :slot)
-  attr_reader :car_list
 
   def initialize
     @car_list = []
@@ -28,5 +27,13 @@ class ParkingLot
   def find_empty_slot
     occupied = @car_list.map { |car| car[:slot] }
     (1..MAX_CARS).find { |slot| !occupied.include?(slot) }
+  end
+
+  def display_all_cars
+    return puts 'No cars found' unless @car_list
+
+    @car_list.each do |car|
+      puts "Regn No: #{car[:registration_number]} | Slot: #{car[:slot]}"
+    end
   end
 end

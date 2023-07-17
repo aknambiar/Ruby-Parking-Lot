@@ -60,9 +60,7 @@ class Interface
 
   public
   def display_all_cars
-    @parking_lot.car_list.each do |car|
-      puts "Regn No: #{car[:registration_number]} | Slot: #{car[:slot]}"
-    end
+    @parking_lot.display_all_cars
   end
 
   def display_invoices

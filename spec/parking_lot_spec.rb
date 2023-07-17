@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../parking_lot'
+require_relative '../constants'
 
 RSpec.describe ParkingLot do
   let(:parking_lot) { ParkingLot.new }
@@ -13,12 +14,15 @@ RSpec.describe ParkingLot do
       expect(car).to be_an_instance_of ParkingLot::Car
     end
 
-    it 'fails to park a car if no slots are available' do
-      parking_lot.instance_variable_set('@max_cars', 0)
+    context 'The parking lot is full' do
+      before { Constants::MAX_CARS = 0 }
+      after { Constants::MAX_CARS = 10 }
 
-      car = parking_lot.park_car(regn)
+      it 'fails to park a car' do
+        car = parking_lot.park_car(regn)
 
-      expect(car).to be_falsy
+        expect(car).to be_falsy
+      end
     end
   end
 
@@ -56,10 +60,15 @@ RSpec.describe ParkingLot do
       expect(parking_lot.find_empty_slot).to eq(2)
     end
 
-    it 'returns nil if no slots are available' do
-      parking_lot.instance_variable_set('@max_cars', 0)
+    context 'The parking lot is full' do
+      before { Constants::MAX_CARS = 0 }
+      after { Constants::MAX_CARS = 10 }
+      
+      it 'returns nil since no slots are available' do
+        parking_lot.instance_variable_set('@max_cars', 0)
 
-      expect(parking_lot.find_empty_slot).to be_falsy
+        expect(parking_lot.find_empty_slot).to be_falsy
+      end
     end
   end
 end

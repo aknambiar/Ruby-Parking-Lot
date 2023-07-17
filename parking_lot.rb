@@ -2,11 +2,13 @@
 
 # Parking and unparks cars
 class ParkingLot
+  require_relative 'constants'
+  include Constants
+
   Car = Struct.new(:regn, :entry_time, :slot)
   attr_reader :car_list
 
   def initialize
-    @max_cars = 10
     @car_list = []
   end
 
@@ -25,6 +27,6 @@ class ParkingLot
 
   def find_empty_slot
     occupied = @car_list.map { |car| car[:slot] }
-    (1..@max_cars).find { |slot| !occupied.include?(slot) }
+    (1..MAX_CARS).find { |slot| !occupied.include?(slot) }
   end
 end

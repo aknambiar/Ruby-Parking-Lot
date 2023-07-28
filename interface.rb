@@ -43,6 +43,8 @@ class Interface
     end
   end
 
+  private
+
   def park(regn)
     car = @parking_lot.park_car(regn)
     car ? "Parked at #{car[:slot]}" : 'No space left'
@@ -52,20 +54,17 @@ class Interface
     car = @parking_lot.unpark_car(regn)
     return 'Car does not exist' unless car
 
-    @invoice_system.generate_invoice(car[:regn], car[:entry_time])
+    @invoice_system.generate_invoice(car[:registration_number], car[:entry_time])
     "Unparked car from #{car[:slot]}"
   end
 
+  public
   def display_all_cars
-    @parking_lot.car_list.each do |car|
-      puts "Regn No: #{car[:regn]} | Slot: #{car[:slot]}"
-    end
+    @parking_lot.display_all_cars
   end
 
   def display_invoices
-    @invoice_system.list_all_invoices.each do |invoice|
-      puts "Id: #{invoice[:id]} | Car: #{invoice[:regn]}"
-    end
+    @invoice_system.display_invoices
   end
 
   def retrieve_invoice

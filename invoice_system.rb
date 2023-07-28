@@ -5,7 +5,7 @@ class InvoiceSystem
   require_relative 'constants'
   include Constants
 
-  Invoice = Struct.new(:id, :regn, :entry_time, :exit_time, :duration, :amount)
+  Invoice = Struct.new(:id, :registration_number, :entry_time, :exit_time, :duration, :amount)
 
   def initialize
     @invoice_list = []
@@ -33,8 +33,13 @@ class InvoiceSystem
     PARKING_CHARGES.select { |slab| duration >= slab }.values.max
   end
 
-  def list_all_invoices
-    @invoice_list.map { |invoice| { id: invoice[:id], regn: invoice[:regn] } }
+  def display_invoices
+    invoices = @invoice_list.map { |invoice| { id: invoice[:id], regn: invoice[:registration_number] } }
+    return puts 'No invoices found' unless invoices
+
+    invoices.each do |invoice|
+      puts "Id: #{invoice[:id]} | Car: #{invoice[:regn]}"
+    end
   end
 
   def lookup_invoice(invoice_id)

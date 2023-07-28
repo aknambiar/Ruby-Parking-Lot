@@ -29,7 +29,7 @@ RSpec.describe Interface do
     it 'should unpark the car and generate an invoice' do
       allow(interface).to receive(:input).and_return(regn, 'u')
 
-      interface.park(regn)
+      interface.send(:park, regn)
 
       expect { interface.parking }.to output(/Unparked car from 1/).to_stdout
     end
@@ -47,7 +47,7 @@ RSpec.describe Interface do
   let(:list_of_regn) { ['AB12345678', 'CD12345678', 'EF12345678'] }
 
   it 'should display the list of parked cars' do
-    list_of_regn.each { |x| interface.park(x) }
+    list_of_regn.each { |x| interface.send(:park, x) }
 
     list_of_regn.each_with_index do |x, slot|
       expect { interface.display_all_cars }.to output(/Regn No: #{x} | Slot: #{slot + 1}/).to_stdout
@@ -61,8 +61,8 @@ RSpec.describe Interface do
 
   it 'should display the list of all invoices' do
     list_of_regn.each do |regn|
-      interface.park(regn)
-      interface.unpark(regn)
+      interface.send(:park, regn)
+      interface.send(:unpark, regn)
 
       expect { interface.display_invoices }.to output(/Id: \d+ | Car: #{regn}/).to_stdout
     end
@@ -72,10 +72,10 @@ RSpec.describe Interface do
     it 'should display a particular invoice' do
       allow(interface).to receive(:input).and_return('101')
 
-      interface.park(list_of_regn[0])
-      interface.unpark(list_of_regn[0])
+      interface.send(:park, list_of_regn[0])
+      interface.send(:unpark, list_of_regn[0])
 
-      expect { interface.lookup_invoice }.to output(/Id : 101\nRegn : #{list_of_regn[0]}/).to_stdout
+      expect { interface.lookup_invoice }.to output(/Id : 101\nRegistration_number : #{list_of_regn[0]}/).to_stdout
     end
   end
 

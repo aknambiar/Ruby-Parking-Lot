@@ -50,7 +50,7 @@ RSpec.describe ParkingLot do
 
     car = parking_lot.find_car(regn)
 
-    expect(car).to be_an_instance_of ParkingLot::Car and expect(car[:regn]).to eq(regn)
+    expect(car).to be_an_instance_of ParkingLot::Car and expect(car[:registration_number]).to eq(regn)
   end
 
   context 'When searching for a slot' do

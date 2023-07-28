@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-def write_invoice(invoice)
-  IO.write("./invoices/#{invoice[:id]}.csv", invoice.values.join(', '))
+class CsvExport
+  def write_invoice(invoice)
+    IO.write("./invoices/#{invoice[:id]}.csv", invoice.values.join(', '))
+  end
 end

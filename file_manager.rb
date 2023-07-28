@@ -30,7 +30,9 @@ class FileManager
     require INVOICE_SAVE_PATH + '/' + type + FILETYPE_SUFFIX
 
     begin
-      write_invoice(invoice)
+      # write_invoice(invoice)
+      class_name = type.capitalize + 'Export'
+      Object.const_get(class_name).new.write_invoice(invoice)
       puts 'Written to file successfully'
     rescue
       puts 'An error occurred'

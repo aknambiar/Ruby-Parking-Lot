@@ -18,13 +18,17 @@ RSpec.describe Interface do
     it 'should return true if number is valid' do
       registration_number = 'AB12345678'
 
-      expect(interface.validate(registration_number)).to be_truthy
+      valid = interface.send(:validate, registration_number)
+
+      expect(valid).to be_truthy
     end
 
     it 'should return false if number is invalid' do
       registration_number = 'AB123'
 
-      expect(interface.validate(registration_number)).to be_falsy
+      valid = interface.send(:validate, registration_number)
+
+      expect(valid).to be_falsy
     end
   end
 end

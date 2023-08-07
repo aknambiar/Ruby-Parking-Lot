@@ -51,11 +51,6 @@ class Interface
     @invoice_system.display_invoices
   end
 
-  def retrieve_invoice
-    id = (input 'Enter invoice number').to_i
-    @invoice_system.lookup_invoice(id)
-  end
-
   def lookup_invoice
     invoice = retrieve_invoice
     return puts 'Invoice not found' unless invoice
@@ -68,10 +63,6 @@ class Interface
     return puts 'Invoice not found' unless invoice
 
     @file_manager.save_invoice(invoice)
-  end
-
-  def validate(registration_number)
-    registration_number.match?(/(^[A-Za-z]{2}[0-9]{8})$/)
   end
 
   private
@@ -87,5 +78,14 @@ class Interface
 
     @invoice_system.generate_invoice(car[:registration_number], car[:entry_time])
     "Unparked car from #{car[:slot]}"
+  end
+
+  def retrieve_invoice
+    id = (input 'Enter invoice number').to_i
+    @invoice_system.lookup_invoice(id)
+  end
+
+  def validate(registration_number)
+    registration_number.match?(/(^[A-Za-z]{2}[0-9]{8})$/)
   end
 end

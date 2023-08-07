@@ -2,7 +2,7 @@
 
 class CsvExport
   def write_invoice(invoice)
-    IO.write("./invoices/#{invoice[:id]}.csv", 'Format: CSV')
-    IO.write("./invoices/#{invoice[:id]}.csv", invoice.values.join(', '))
+    IO.write("./invoices/#{invoice[:id]}.csv", "Format: CSV\n")
+    IO.write("./invoices/#{invoice[:id]}.csv", invoice.values.join(', '), mode: 'a')
   end
 end

@@ -35,7 +35,7 @@ class InvoiceSystem
 
   def display_invoices
     invoices = @invoice_list.map { |invoice| { id: invoice[:id], regn: invoice[:registration_number] } }
-    return puts 'No invoices found' unless invoices
+    return puts 'No invoices found' if invoices.empty?
 
     invoices.each do |invoice|
       puts "Id: #{invoice[:id]} | Car: #{invoice[:regn]}"

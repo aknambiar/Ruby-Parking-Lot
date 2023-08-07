@@ -87,6 +87,6 @@ class Interface
   end
 
   def validate(regn)
-    regn.match?(/[A-Za-z]{2}[0-9]{8}/)
+    regn.match?(/(^[A-Za-z]{2}[0-9]{8})$/)
   end
 end

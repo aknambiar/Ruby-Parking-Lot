@@ -43,22 +43,6 @@ class Interface
     end
   end
 
-  private
-
-  def park(registration_number)
-    car = @parking_lot.park_car(registration_number)
-    car ? "Parked at #{car[:slot]}" : 'No space left'
-  end
-
-  def unpark(registration_number)
-    car = @parking_lot.unpark_car(registration_number)
-    return 'Car does not exist' unless car
-
-    @invoice_system.generate_invoice(car[:registration_number], car[:entry_time])
-    "Unparked car from #{car[:slot]}"
-  end
-
-  public
   def display_all_cars
     @parking_lot.display_all_cars
   end
@@ -88,5 +72,20 @@ class Interface
 
   def validate(registration_number)
     registration_number.match?(/(^[A-Za-z]{2}[0-9]{8})$/)
+  end
+
+  private
+
+  def park(registration_number)
+    car = @parking_lot.park_car(registration_number)
+    car ? "Parked at #{car[:slot]}" : 'No space left'
+  end
+
+  def unpark(registration_number)
+    car = @parking_lot.unpark_car(registration_number)
+    return 'Car does not exist' unless car
+
+    @invoice_system.generate_invoice(car[:registration_number], car[:entry_time])
+    "Unparked car from #{car[:slot]}"
   end
 end

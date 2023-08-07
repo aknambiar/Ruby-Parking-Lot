@@ -11,17 +11,17 @@ class ParkingLot
     @car_list = []
   end
 
-  def park_car(regn)
+  def park_car(registration_number)
     slot = find_empty_slot
-    @car_list.push(Car.new(regn, Time.now, slot)).last if slot
+    @car_list.push(Car.new(registration_number, Time.now, slot)).last if slot
   end
 
-  def unpark_car(regn)
-    @car_list.delete(find_car(regn))
+  def unpark_car(registration_number)
+    @car_list.delete(find_car(registration_number))
   end
 
-  def find_car(regn)
-    @car_list.detect { |car| car[:registration_number] == regn }
+  def find_car(registration_number)
+    @car_list.detect { |car| car[:registration_number] == registration_number }
   end
 
   def find_empty_slot

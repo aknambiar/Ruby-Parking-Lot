@@ -33,25 +33,25 @@ class Interface
   end
 
   def parking
-    regn = input 'Enter registration number'
-    return puts 'Invalid registration number' unless validate(regn)
+    registration_number = input 'Enter registration number'
+    return puts 'Invalid registration number' unless validate(registration_number)
 
     case input 'Park/Unpark? [p/u]'
-    when 'p', 'P' then puts park(regn)
-    when 'u', 'U' then puts unpark(regn)
+    when 'p', 'P' then puts park(registration_number)
+    when 'u', 'U' then puts unpark(registration_number)
     else puts 'Error'
     end
   end
 
   private
 
-  def park(regn)
-    car = @parking_lot.park_car(regn)
+  def park(registration_number)
+    car = @parking_lot.park_car(registration_number)
     car ? "Parked at #{car[:slot]}" : 'No space left'
   end
 
-  def unpark(regn)
-    car = @parking_lot.unpark_car(regn)
+  def unpark(registration_number)
+    car = @parking_lot.unpark_car(registration_number)
     return 'Car does not exist' unless car
 
     @invoice_system.generate_invoice(car[:registration_number], car[:entry_time])
@@ -86,7 +86,7 @@ class Interface
     @file_manager.save_invoice(invoice)
   end
 
-  def validate(regn)
-    regn.match?(/(^[A-Za-z]{2}[0-9]{8})$/)
+  def validate(registration_number)
+    registration_number.match?(/(^[A-Za-z]{2}[0-9]{8})$/)
   end
 end

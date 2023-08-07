@@ -12,12 +12,12 @@ class InvoiceSystem
     @incrementing_id = INITIAL_ID_NUMBER
   end
 
-  def generate_invoice(regn, entry_time)
+  def generate_invoice(registration_number, entry_time)
     invoice_id = calculate_id
     exit_time = Time.now
     duration = calculate_duration(entry_time, exit_time)
     amount = calculate_amount(duration)
-    @invoice_list.append(Invoice.new(invoice_id, regn, entry_time.strftime('%H:%M:%S'),
+    @invoice_list.append(Invoice.new(invoice_id, registration_number, entry_time.strftime('%H:%M:%S'),
                                      exit_time.strftime('%H:%M:%S'), duration, amount)).last
   end
 
@@ -34,11 +34,11 @@ class InvoiceSystem
   end
 
   def display_invoices
-    invoices = @invoice_list.map { |invoice| { id: invoice[:id], regn: invoice[:registration_number] } }
+    invoices = @invoice_list.map { |invoice| { id: invoice[:id], registration_number: invoice[:registration_number] } }
     return puts 'No invoices found' if invoices.empty?
 
     invoices.each do |invoice|
-      puts "Id: #{invoice[:id]} | Car: #{invoice[:regn]}"
+      puts "Id: #{invoice[:id]} | Car: #{invoice[:registration_number]}"
     end
   end
 

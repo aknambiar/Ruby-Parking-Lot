@@ -6,10 +6,10 @@ RSpec.describe InvoiceSystem do
   let(:invoice_system) { InvoiceSystem.new }
 
   it 'generates an invoice' do
-    regn = 'AB12345678'
+    registration_number = 'AB12345678'
     entry_time = Time.now
 
-    invoice = invoice_system.generate_invoice(regn, entry_time)
+    invoice = invoice_system.generate_invoice(registration_number, entry_time)
 
     expect(invoice).to be_an_instance_of InvoiceSystem::Invoice
   end

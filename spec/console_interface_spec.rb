@@ -16,15 +16,15 @@ RSpec.describe Interface do
 
   context 'When receiving a registration number' do
     it 'should return true if number is valid' do
-      regn = 'AB12345678'
+      registration_number = 'AB12345678'
 
-      expect(interface.validate(regn)).to be_truthy
+      expect(interface.validate(registration_number)).to be_truthy
     end
 
     it 'should return false if number is invalid' do
-      regn = 'AB123'
+      registration_number = 'AB123'
 
-      expect(interface.validate(regn)).to be_falsy
+      expect(interface.validate(registration_number)).to be_falsy
     end
   end
 end
